@@ -14,6 +14,7 @@ public class Quiz extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mPrevButton;
     private Button mNextButton;
 
     private Question[] mQuestionBank = new Question[] {
@@ -25,6 +26,7 @@ public class Quiz extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int mPrevIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,19 @@ public class Quiz extends AppCompatActivity {
         mQuestionTextView = findViewById(R.id.question_text_view);
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
+        mPrevButton = findViewById(R.id.prev_button);
         mNextButton = findViewById(R.id.next_button);
 
-        updateQuestion();   // initially update question
-        // The button click listeners
+        updateQuestion(mCurrentIndex);   // initially update question
+        // The  onClick listeners
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPrevIndex = mCurrentIndex;
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion(mCurrentIndex);
+            }
+        });
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,18 +62,25 @@ public class Quiz extends AppCompatActivity {
                 checkAnswer(false);
             }
         });
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateQuestion(mPrevIndex);
+            }
+        });
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPrevIndex = mCurrentIndex;
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
+                updateQuestion(mCurrentIndex);
             }
         });
     }
 
     // Update question
-    private void updateQuestion() {
-        mQuestionTextView.setText(mQuestionBank[mCurrentIndex].getTextResId());
+    private void updateQuestion(int index) {
+        mQuestionTextView.setText(mQuestionBank[index].getTextResId());
     }
     // Checking the user's answer
     private void checkAnswer(boolean userPressedTrue) {
