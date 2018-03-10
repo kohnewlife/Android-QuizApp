@@ -38,6 +38,10 @@ public class Quiz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
+        // load current question (for handling rotation  or other runtime configuration changes)
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
 
         // All the views
         mQuestionTextView = findViewById(R.id.question_text_view);
