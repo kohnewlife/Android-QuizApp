@@ -7,6 +7,7 @@ package com.example.skyz.android_quizapp;
 public class Question {
     private int mTextResId;
     private boolean mAnswerTrue;
+    private boolean mNotAnswered = true;
 
     public Question(int textRestId, boolean answerTrue) {
         mTextResId = textRestId;
@@ -27,5 +28,13 @@ public class Question {
 
     public void setAnswerTrue(boolean answerTrue) {
         mAnswerTrue = answerTrue;
+    }
+
+    public boolean isNotAnswered() {
+        return mNotAnswered;
+    }
+
+    public void setNotAnswered(boolean alreadyAnswered) {
+        mNotAnswered = alreadyAnswered;
     }
 }

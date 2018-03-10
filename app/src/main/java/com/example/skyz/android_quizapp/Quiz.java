@@ -32,6 +32,7 @@ public class Quiz extends AppCompatActivity {
 
     private static final String TAG = "Quiz Activity";
     private static final String KEY_INDEX = "index";
+    private static final String KEY_INDEX_ANSWERED = "index answered";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,10 @@ public class Quiz extends AppCompatActivity {
         // load current question (for handling rotation  or other runtime configuration changes)
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            boolean[] questionAnswered = savedInstanceState.getBooleanArray(KEY_INDEX_ANSWERED);
+            for (int i = 0; i < questionAnswered.length; i++) {
+                mQuestionBank[i].setNotAnswered(questionAnswered[i]);
+            }
         }
 
         // All the views
@@ -64,6 +69,7 @@ public class Quiz extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+                mTrueButton.setEnabled(false);
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,7 @@ public class Quiz extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateQuestion(mPrevIndex);
+
             }
         });
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +105,8 @@ public class Quiz extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() called");
+
+        updateAnswerButtons();
     }
 
     @Override
@@ -109,7 +118,14 @@ public class Quiz extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceSate");
         outState.putInt(KEY_INDEX, mCurrentIndex);
+
+        boolean[] questionAnswered = new boolean[mQuestionBank.length];
+        for (int i = 0; i < mQuestionBank.length; i++) {
+            questionAnswered[i] = mQuestionBank[i].isNotAnswered();
+        }
+        outState.putBooleanArray(KEY_INDEX_ANSWERED, questionAnswered);
     }
 
     @Override
@@ -126,13 +142,19 @@ public class Quiz extends AppCompatActivity {
 
     // Update question
     private void updateQuestion(int index) {
+        mCurrentIndex = index;
         mQuestionTextView.setText(mQuestionBank[index].getTextResId());
+        updateAnswerButtons();
     }
     // Checking the user's answer
     private void checkAnswer(boolean userPressedTrue) {
-        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+        Question question = mQuestionBank[mCurrentIndex];
+        // disable buttons
+        question.setNotAnswered(false);
+        updateAnswerButtons();
+        boolean answerIsTrue = question.isAnswerTrue();
 
-        int messageResId = 0;
+        int messageResId;
 
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
@@ -140,5 +162,10 @@ public class Quiz extends AppCompatActivity {
             messageResId = R.string.incorrect_toast;
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateAnswerButtons() {    // disable, enable buttons
+        mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].isNotAnswered());
+        mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].isNotAnswered());
     }
 }
