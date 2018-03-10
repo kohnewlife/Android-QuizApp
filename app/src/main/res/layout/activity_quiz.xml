@@ -22,12 +22,14 @@
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/true_button"/>
+            android:text="@string/true_button"
+            tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/false_button"/>
+            android:text="@string/false_button"
+            tools:ignore="ButtonStyle"/>
 
     </LinearLayout>
 
@@ -35,20 +37,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
+        <ImageButton
             android:id="@+id/prev_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/prev_button"
-            android:drawableLeft="@drawable/arrow_left"
-            android:padding="4dp"/>
-        <Button
+            android:src="@drawable/arrow_left"
+            android:contentDescription="@string/prev_button"/>
+        <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:drawableRight="@drawable/arrow_right"
-            android:padding="4dp"/>
+            android:src="@drawable/arrow_right"
+            android:contentDescription="@string/next_button"/>
     </LinearLayout>
 
 </LinearLayout>
