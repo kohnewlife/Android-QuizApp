@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Stack;
+
 public class Quiz extends AppCompatActivity {
 
     private TextView mQuestionTextView;
@@ -29,10 +31,16 @@ public class Quiz extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
     private int mPrevIndex = 0;
+    private int mCorrectAnswers = 0;
+    private int mTotalAnswers = 0;
+
+    private Stack<Integer> questionStack = new Stack<>();   // TODO push questions to stack for prev
 
     private static final String TAG = "Quiz Activity";
     private static final String KEY_INDEX = "index";
     private static final String KEY_INDEX_ANSWERED = "index answered";
+    private static final String KEY_INDEX_CORRECT_ANSWERED = "index correct answered";
+    private static final String KEY_INDEX_TOTAL_ANSWERED = "index total answered";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,8 @@ public class Quiz extends AppCompatActivity {
             for (int i = 0; i < questionAnswered.length; i++) {
                 mQuestionBank[i].setNotAnswered(questionAnswered[i]);
             }
+            mCorrectAnswers = savedInstanceState.getInt(KEY_INDEX_CORRECT_ANSWERED, 0);
+            mTotalAnswers = savedInstanceState.getInt(KEY_INDEX_TOTAL_ANSWERED);
         }
 
         // All the views
@@ -126,6 +136,10 @@ public class Quiz extends AppCompatActivity {
             questionAnswered[i] = mQuestionBank[i].isNotAnswered();
         }
         outState.putBooleanArray(KEY_INDEX_ANSWERED, questionAnswered);
+
+        outState.putInt(KEY_INDEX_CORRECT_ANSWERED, mCorrectAnswers);
+        outState.putInt(KEY_INDEX_TOTAL_ANSWERED, mTotalAnswers);
+
     }
 
     @Override
@@ -148,6 +162,7 @@ public class Quiz extends AppCompatActivity {
     }
     // Checking the user's answer
     private void checkAnswer(boolean userPressedTrue) {
+        mTotalAnswers++;
         Question question = mQuestionBank[mCurrentIndex];
         // disable buttons
         question.setNotAnswered(false);
@@ -158,8 +173,13 @@ public class Quiz extends AppCompatActivity {
 
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
+            mCorrectAnswers++;
         } else {
             messageResId = R.string.incorrect_toast;
+        }
+        if (mTotalAnswers == mQuestionBank.length) {
+            Toast.makeText(this, "You answered " + mCorrectAnswers + " correct" +
+                    " answeres," + " out of " + mTotalAnswers, Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }

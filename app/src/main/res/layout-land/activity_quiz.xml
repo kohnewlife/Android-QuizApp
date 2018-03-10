@@ -23,8 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/true_button"
-            tools:ignore="ButtonStyle"
-            android:enabled="true"/>
+            tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/false_button"
             android:layout_width="wrap_content"
@@ -43,14 +42,14 @@
             android:id="@+id/prev_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="bottom|start"
             android:src="@drawable/arrow_left"
             android:contentDescription="@string/prev_button"/>
         <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
+            android:layout_gravity="bottom|end"
             android:src="@drawable/arrow_right"
             android:contentDescription="@string/next_button"/>
     <!--</LinearLayout>-->
