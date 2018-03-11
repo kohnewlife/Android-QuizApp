@@ -1,5 +1,6 @@
 package com.example.skyz.android_quizapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ public class Quiz extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
+    private Button mCheatButton;
     private ImageButton mPrevButton;
     private ImageButton mNextButton;
 
@@ -62,6 +64,7 @@ public class Quiz extends AppCompatActivity {
         mQuestionTextView = findViewById(R.id.question_text_view);
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
+        mCheatButton = findViewById(R.id.cheat_button);
         mPrevButton = findViewById(R.id.prev_button);
         mNextButton = findViewById(R.id.next_button);
 
@@ -86,6 +89,13 @@ public class Quiz extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkAnswer(false);
+            }
+        });
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Quiz.this, CheatActivity.class);
+                startActivity(intent);
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
