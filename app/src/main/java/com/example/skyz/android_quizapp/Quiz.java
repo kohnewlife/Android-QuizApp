@@ -1,5 +1,6 @@
 package com.example.skyz.android_quizapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class Quiz extends AppCompatActivity {
     private int mPrevIndex = 0;
     private int mCorrectAnswers = 0;
     private int mTotalAnswers = 0;
+    private boolean mDidCheat;
 
     private Stack<Integer> questionStack = new Stack<>();   // TODO push questions to stack for prev
 
@@ -112,9 +114,22 @@ public class Quiz extends AppCompatActivity {
             public void onClick(View view) {
                 mPrevIndex = mCurrentIndex;
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mDidCheat = false;
                 updateQuestion(mCurrentIndex);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null)
+                return;
+            mDidCheat = CheatActivity.wasAnswerShown(data);
+        }
     }
 
     @Override
@@ -182,18 +197,22 @@ public class Quiz extends AppCompatActivity {
         boolean answerIsTrue = question.isAnswerTrue();
 
         int messageResId;
-
-        if (userPressedTrue == answerIsTrue) {
-            messageResId = R.string.correct_toast;
-            mCorrectAnswers++;
+        if (mDidCheat) {
+            Toast.makeText(this, R.string.judgement_toast, Toast.LENGTH_SHORT).show();
         } else {
-            messageResId = R.string.incorrect_toast;
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+                mCorrectAnswers++;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
+            Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
         }
         if (mTotalAnswers == mQuestionBank.length) {
             Toast.makeText(this, "You answered " + mCorrectAnswers + " correct" +
                     " answeres," + " out of " + mTotalAnswers, Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+
     }
 
     private void updateAnswerButtons() {    // disable, enable buttons
