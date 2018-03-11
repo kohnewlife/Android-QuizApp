@@ -43,6 +43,7 @@ public class Quiz extends AppCompatActivity {
     private static final String KEY_INDEX_ANSWERED = "index answered";
     private static final String KEY_INDEX_CORRECT_ANSWERED = "index correct answered";
     private static final String KEY_INDEX_TOTAL_ANSWERED = "index total answered";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class Quiz extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isAnswerTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
                 Intent intent = CheatActivity.newIntent(Quiz.this, isAnswerTrue);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {

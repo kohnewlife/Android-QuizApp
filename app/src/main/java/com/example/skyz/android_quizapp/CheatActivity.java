@@ -17,6 +17,7 @@ public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA_ANSWER_IS_TRUE =
             "com.example.skyz.android_quizapp.answer_is_true";
+    private static final String EXTRA_ANSWER_SHOWN = "com.example.skyz.android_quizapp.answer_shown";
 
     public static Intent newIntent(Context packageContent, boolean answerIsTrue) {
         Intent intent = new Intent(packageContent, CheatActivity.class);
@@ -41,7 +42,14 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
+                setAnswerShownResult(true);
             }
         });
+    }
+
+    private void setAnswerShownResult(boolean isAnswerShown) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
+        setResult(RESULT_OK, intent);
     }
 }
