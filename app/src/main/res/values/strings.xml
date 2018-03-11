@@ -6,6 +6,10 @@
     <string name="next_button">Next</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
+    <string name="warning_text">Are you sure you want to cheat?</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="judgement_toast">You cheated!</string>
 
     <string name="question_australia">Canberra is the capital of Australia.</string>
     <string name="question_mideast">The Suez Canal connects the Read Sea and the Indian
