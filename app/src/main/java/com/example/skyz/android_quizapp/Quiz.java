@@ -17,6 +17,7 @@ import java.util.Stack;
 public class Quiz extends AppCompatActivity {
 
     private TextView mQuestionTextView;
+    private TextView mCheatTokenTextView;
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -72,6 +73,7 @@ public class Quiz extends AppCompatActivity {
 
         // All the views
         mQuestionTextView = findViewById(R.id.question_text_view);
+        mCheatTokenTextView = findViewById(R.id.cheat_token_text_view);
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
         mCheatButton = findViewById(R.id.cheat_button);
@@ -79,6 +81,9 @@ public class Quiz extends AppCompatActivity {
         mNextButton = findViewById(R.id.next_button);
 
         updateQuestion(mCurrentIndex);   // initially update question
+        // Set texts
+        mCheatTokenTextView.setText(getString(R.string.cheat_token, mCheatTokens));
+        
         // The  onClick listeners
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override

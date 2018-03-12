@@ -11,6 +11,7 @@
     <string name="cheat_button">Cheat!</string>
     <string name="judgement_toast">You cheated!</string>
     <string name="api_level">API Level %1$d</string>
+    <string name="cheat_token">Cheat Tokens left: %1$d</string>
 
     <string name="question_australia">Canberra is the capital of Australia.</string>
     <string name="question_mideast">The Suez Canal connects the Read Sea and the Indian
