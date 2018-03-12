@@ -36,7 +36,6 @@ public class Quiz extends AppCompatActivity {
     private int mPrevIndex = 0;
     private int mCorrectAnswers = 0;
     private int mTotalAnswers = 0;
-    private boolean mDidCheat;
 
     private Stack<Integer> questionStack = new Stack<>();   // TODO push questions to stack for prev
 
@@ -45,7 +44,7 @@ public class Quiz extends AppCompatActivity {
     private static final String KEY_INDEX_ANSWERED = "index answered";
     private static final String KEY_INDEX_CORRECT_ANSWERED = "index correct answered";
     private static final String KEY_INDEX_TOTAL_ANSWERED = "index total answered";
-    private static final String KEY_INDEX_DID_CHEAT = "index did cheat";
+    private static final String KEY_INDEX_CHEATED = "index cheated";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     @Override
@@ -60,7 +59,10 @@ public class Quiz extends AppCompatActivity {
             for (int i = 0; i < questionAnswered.length; i++) {
                 mQuestionBank[i].setNotAnswered(questionAnswered[i]);
             }
-            mDidCheat = savedInstanceState.getBoolean(KEY_INDEX_DID_CHEAT, false);
+            boolean[] questionCheated = savedInstanceState.getBooleanArray(KEY_INDEX_CHEATED);
+            for (int i = 0; i <questionCheated.length; i++) {
+                mQuestionBank[i].setCheated(questionCheated[i]);
+            }
             mCorrectAnswers = savedInstanceState.getInt(KEY_INDEX_CORRECT_ANSWERED, 0);
             mTotalAnswers = savedInstanceState.getInt(KEY_INDEX_TOTAL_ANSWERED);
         }
@@ -116,7 +118,6 @@ public class Quiz extends AppCompatActivity {
             public void onClick(View view) {
                 mPrevIndex = mCurrentIndex;
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                mDidCheat = false;
                 updateQuestion(mCurrentIndex);
             }
         });
@@ -130,7 +131,8 @@ public class Quiz extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHEAT) {
             if (data == null)
                 return;
-            mDidCheat = CheatActivity.wasAnswerShown(data);
+//            mDidCheat = CheatActivity.wasAnswerShown(data);
+            mQuestionBank[mCurrentIndex].setCheated(CheatActivity.wasAnswerShown(data));
         }
     }
 
@@ -165,10 +167,13 @@ public class Quiz extends AppCompatActivity {
             questionAnswered[i] = mQuestionBank[i].isNotAnswered();
         }
         outState.putBooleanArray(KEY_INDEX_ANSWERED, questionAnswered);
-        outState.putBoolean(KEY_INDEX_DID_CHEAT, mDidCheat);
+        boolean[] questionCheated = new boolean[mQuestionBank.length];
+        for (int i = 0; i < mQuestionBank.length; i++) {
+            questionCheated[i] = mQuestionBank[i].isCheated();
+        }
+        outState.putBooleanArray(KEY_INDEX_CHEATED, questionCheated);
         outState.putInt(KEY_INDEX_CORRECT_ANSWERED, mCorrectAnswers);
         outState.putInt(KEY_INDEX_TOTAL_ANSWERED, mTotalAnswers);
-
     }
 
     @Override
@@ -199,7 +204,7 @@ public class Quiz extends AppCompatActivity {
         boolean answerIsTrue = question.isAnswerTrue();
 
         int messageResId;
-        if (mDidCheat) {
+        if (question.isCheated()) {
             Toast.makeText(this, R.string.judgement_toast, Toast.LENGTH_SHORT).show();
         } else {
             if (userPressedTrue == answerIsTrue) {
