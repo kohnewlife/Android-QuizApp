@@ -45,6 +45,7 @@ public class Quiz extends AppCompatActivity {
     private static final String KEY_INDEX_ANSWERED = "index answered";
     private static final String KEY_INDEX_CORRECT_ANSWERED = "index correct answered";
     private static final String KEY_INDEX_TOTAL_ANSWERED = "index total answered";
+    private static final String KEY_INDEX_DID_CHEAT = "index did cheat";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     @Override
@@ -59,6 +60,7 @@ public class Quiz extends AppCompatActivity {
             for (int i = 0; i < questionAnswered.length; i++) {
                 mQuestionBank[i].setNotAnswered(questionAnswered[i]);
             }
+            mDidCheat = savedInstanceState.getBoolean(KEY_INDEX_DID_CHEAT, false);
             mCorrectAnswers = savedInstanceState.getInt(KEY_INDEX_CORRECT_ANSWERED, 0);
             mTotalAnswers = savedInstanceState.getInt(KEY_INDEX_TOTAL_ANSWERED);
         }
@@ -163,7 +165,7 @@ public class Quiz extends AppCompatActivity {
             questionAnswered[i] = mQuestionBank[i].isNotAnswered();
         }
         outState.putBooleanArray(KEY_INDEX_ANSWERED, questionAnswered);
-
+        outState.putBoolean(KEY_INDEX_DID_CHEAT, mDidCheat);
         outState.putInt(KEY_INDEX_CORRECT_ANSWERED, mCorrectAnswers);
         outState.putInt(KEY_INDEX_TOTAL_ANSWERED, mTotalAnswers);
 
@@ -210,9 +212,8 @@ public class Quiz extends AppCompatActivity {
         }
         if (mTotalAnswers == mQuestionBank.length) {
             Toast.makeText(this, "You answered " + mCorrectAnswers + " correct" +
-                    " answeres," + " out of " + mTotalAnswers, Toast.LENGTH_SHORT).show();
+                    " answers," + " out of " + mTotalAnswers, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void updateAnswerButtons() {    // disable, enable buttons

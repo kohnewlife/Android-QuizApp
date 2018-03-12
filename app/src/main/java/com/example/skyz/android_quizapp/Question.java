@@ -8,6 +8,7 @@ public class Question {
     private int mTextResId;
     private boolean mAnswerTrue;
     private boolean mNotAnswered = true;
+    private boolean mIsCheated = false;
 
     public Question(int textRestId, boolean answerTrue) {
         mTextResId = textRestId;
@@ -36,5 +37,13 @@ public class Question {
 
     public void setNotAnswered(boolean alreadyAnswered) {
         mNotAnswered = alreadyAnswered;
+    }
+
+    public boolean isCheated() {
+        return mIsCheated;
+    }
+
+    public void setCheated(boolean cheated) {
+        mIsCheated = cheated;
     }
 }
