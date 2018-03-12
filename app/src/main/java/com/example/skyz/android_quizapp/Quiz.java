@@ -36,6 +36,7 @@ public class Quiz extends AppCompatActivity {
     private int mPrevIndex = 0;
     private int mCorrectAnswers = 0;
     private int mTotalAnswers = 0;
+    private int mCheatTokens = 3;
 
     private Stack<Integer> questionStack = new Stack<>();   // TODO push questions to stack for prev
 
@@ -45,6 +46,7 @@ public class Quiz extends AppCompatActivity {
     private static final String KEY_INDEX_CORRECT_ANSWERED = "index correct answered";
     private static final String KEY_INDEX_TOTAL_ANSWERED = "index total answered";
     private static final String KEY_INDEX_CHEATED = "index cheated";
+    private static final String KEY_INDEX_CHEAT_TOKEN = "index cheat token";
     private static final int REQUEST_CODE_CHEAT = 0;
 
     @Override
@@ -65,6 +67,7 @@ public class Quiz extends AppCompatActivity {
             }
             mCorrectAnswers = savedInstanceState.getInt(KEY_INDEX_CORRECT_ANSWERED, 0);
             mTotalAnswers = savedInstanceState.getInt(KEY_INDEX_TOTAL_ANSWERED);
+            mCheatTokens = savedInstanceState.getInt(KEY_INDEX_CHEAT_TOKEN);
         }
 
         // All the views
@@ -174,6 +177,7 @@ public class Quiz extends AppCompatActivity {
         outState.putBooleanArray(KEY_INDEX_CHEATED, questionCheated);
         outState.putInt(KEY_INDEX_CORRECT_ANSWERED, mCorrectAnswers);
         outState.putInt(KEY_INDEX_TOTAL_ANSWERED, mTotalAnswers);
+        outState.putInt(KEY_INDEX_CHEAT_TOKEN, mCheatTokens);
     }
 
     @Override
