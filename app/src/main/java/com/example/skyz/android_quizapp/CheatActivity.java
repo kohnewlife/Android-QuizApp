@@ -2,6 +2,7 @@ package com.example.skyz.android_quizapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 public class CheatActivity extends AppCompatActivity {
 
     private TextView mAnswerTextView;
+    private TextView mApiLevel;
     private Button mShowAnswerButton;
 
     private boolean mAnswerIsTrue;
@@ -44,6 +46,8 @@ public class CheatActivity extends AppCompatActivity {
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
         mAnswerTextView = findViewById(R.id.answer_text_view);
+        mApiLevel = findViewById(R.id.api_level_text_view);
+        mApiLevel.setText(getString(R.string.api_level, Build.VERSION.SDK_INT));
         mShowAnswerButton = findViewById(R.id.show_answer_button);
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
