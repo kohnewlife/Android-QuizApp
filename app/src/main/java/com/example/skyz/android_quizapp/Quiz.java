@@ -81,9 +81,8 @@ public class Quiz extends AppCompatActivity {
         mNextButton = findViewById(R.id.next_button);
 
         updateQuestion(mCurrentIndex);   // initially update question
-        // Set texts
-        mCheatTokenTextView.setText(getString(R.string.cheat_token, mCheatTokens));
-        
+
+
         // The  onClick listeners
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +108,14 @@ public class Quiz extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isAnswerTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
-                Intent intent = CheatActivity.newIntent(Quiz.this, isAnswerTrue);
-                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+                if (mCheatTokens == 0) {
+                    Toast.makeText(Quiz.this, R.string.none_cheat_tokens_toast,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    boolean isAnswerTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                    Intent intent = CheatActivity.newIntent(Quiz.this, isAnswerTrue);
+                    startActivityForResult(intent, REQUEST_CODE_CHEAT);
+                }
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +143,11 @@ public class Quiz extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHEAT) {
             if (data == null)
                 return;
-//            mDidCheat = CheatActivity.wasAnswerShown(data);
-            mQuestionBank[mCurrentIndex].setCheated(CheatActivity.wasAnswerShown(data));
+            boolean wasAnswerShown = CheatActivity.wasAnswerShown(data);
+            mQuestionBank[mCurrentIndex].setCheated(wasAnswerShown);
+            if (wasAnswerShown) {
+                mCheatTokens--;
+            }
         }
     }
 
@@ -154,8 +161,9 @@ public class Quiz extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() called");
-
         updateAnswerButtons();
+        // Set texts
+        mCheatTokenTextView.setText(getString(R.string.cheat_token, mCheatTokens));
     }
 
     @Override
