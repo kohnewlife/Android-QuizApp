@@ -14,14 +14,18 @@
 
 **Landscape View**
 
+By saving all essential information into savedInstanceState, rotating the phone does not affect the app.
+
 ![alt text](Screenshot2.png)
 
 **Cheat Activity View**
 
-The answer only shows up when 'Show Answer' is pressed
+The answer only shows up when 'Show Answer' is pressed.
 
 ![alt text](Screenshot3.png)
 
 **No Cheat Tokens Left**
+
+Warn the player when he tries to uses his cheat.
 
 ![alt text](Screenshot4.png)
