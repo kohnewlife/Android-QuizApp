@@ -13,9 +13,9 @@
 ![alt text](Screenshot1.png)
 
 **Landscape View**
-
+```diff
 By saving all essential information into savedInstanceState, rotating the phone does not affect the app.
-
+```
 ![alt text](Screenshot2.png)
 
 **Cheat Activity View**
@@ -27,7 +27,7 @@ The answer only shows up when 'Show Answer' is pressed.
 **No Cheat Tokens Left**
 
 Warn the player when he tries to uses his cheat.
-
-**Again, this demonstrates the interaction betwwen 2 activities**
-
+```diff
+Again, this demonstrates the interaction betwwen 2 activities
+```
 ![alt text](Screenshot4.png)
