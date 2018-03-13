@@ -10,7 +10,7 @@
 
 **Main Activity View**
 
-![alt text](Screenshot1.png)
+![An image](/Screenshot1.png)<!-- .element height="25%" width="25%" -->
 
 **Landscape View**
 ```diff
