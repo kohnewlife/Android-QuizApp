@@ -22,7 +22,7 @@ By saving all essential information into savedInstanceState, rotating the phone 
 
 The answer only shows up when 'Show Answer' is pressed.
 
-<img src="Screenshot3.png" width="228">
+<img src="quizapp.gif">
 
 **No Cheat Tokens Left**
 
