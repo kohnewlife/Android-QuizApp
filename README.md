@@ -1,2 +1,27 @@
 # Android-QuizApp
+
+
+**Functionalities:**
+1. Answer questions with True/False. The answer will show up as a Toast ("Incorrect"/"Correct")
+2. Move to a new question by pressing Next button ('>' Button), back up one question by '<'
+3. Player is able to cheat (Pressing Cheat Button) and he/she will have only 3 chances to cheat. When all three chances are used, the cheat button will warn and deny the attempt to cheat
+4. A cheat only counts when the play presses 'Show Answer' Button (in the Cheat Activity). And Cheat Activity will talk back to Quiz Activity if the player actually cheats or not.
+5. Keep track of the API the app is build on.
+
+**Main Activity View**
+
 ![alt text](Screenshot1.png)
+
+**Landscape View**
+
+![alt text](Screenshot2.png)
+
+**Cheat Activity View**
+
+The answer only shows up when 'Show Answer' is pressed
+
+![alt text](Screenshot3.png)
+
+**No Cheat Tokens Left**
+
+![alt text](Screenshot4.png)
