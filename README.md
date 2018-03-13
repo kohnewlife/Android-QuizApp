@@ -10,19 +10,19 @@
 
 **Main Activity View**
 
-![An image](/Screenshot1.png)<!-- .element height="25%" width="25%" -->
+<img src="Screenshot1.png" width="228">
 
 **Landscape View**
 ```diff
 By saving all essential information into savedInstanceState, rotating the phone does not affect the app.
 ```
-![alt text](Screenshot2.png)
+<img src="Screenshot2.png" height="228">
 
 **Cheat Activity View**
 
 The answer only shows up when 'Show Answer' is pressed.
 
-![alt text](Screenshot3.png)
+<img src="Screenshot3.png" width="228">
 
 **No Cheat Tokens Left**
 
@@ -30,4 +30,4 @@ Warn the player when he tries to uses his cheat.
 ```diff
 Again, this demonstrates the interaction betwwen 2 activities
 ```
-![alt text](Screenshot4.png)
+<img src="Screenshot4.png" width="228">
